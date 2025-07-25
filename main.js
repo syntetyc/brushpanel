@@ -627,6 +627,29 @@ document.getElementById('exportTxtBtn').onclick = function() {
   }, 100);
 };
 
+function updateUploadAreaHeight() {
+  const uploadDiv = document.querySelector('.upload');
+  if (!uploadDiv) return;
+  if (sets.length > 0) {
+    uploadDiv.classList.add('has-files');
+  } else {
+    uploadDiv.classList.remove('has-files');
+  }
+}
+// Llama a updateUploadAreaHeight después de renderSets, renderSetsWithFade y al cargar/quitar archivos
+const _originalRenderSets = renderSets;
+renderSets = function() {
+  _originalRenderSets.apply(this, arguments);
+  updateUploadAreaHeight();
+};
+const _originalRenderSetsWithFade = renderSetsWithFade;
+renderSetsWithFade = function() {
+  _originalRenderSetsWithFade.apply(this, arguments);
+  updateUploadAreaHeight();
+};
+// Llama también al inicio para el estado inicial
+updateUploadAreaHeight();
+
 renderSets();
 
 // Overlay para pinceles filtrados

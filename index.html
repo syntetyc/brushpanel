@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Panel de Brushsets Procreate (Local, Modo Oscuro)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="upload">
+    <input type="file" id="fileInput" accept=".brushset" multiple />
+    <div id="dropText" class="drop-text">
+      <div class="drop-row">
+        Drop one or multiple Procreate <b>.brushset</b> files here or
+        <button id="dropClickBtn" type="button" class="pill-btn">Browse</button>
+      </div>
+      <div id="progressBarContainer" class="progress-bar-absolute">
+        <div id="progressBar"></div>
+      </div>
+    </div>
+    <div id="error" class="error"></div>
+  </div>
+  <!-- Barra de acciones y filtros -->
+  <div id="setsTitleBar" style="display:none;justify-content:space-between;align-items:center;gap:1.5rem;margin:2.5rem auto 1.2rem auto;max-width:1400px;width:100%;">
+    <span id="setsTitleText" class="sets-title-main"></span>
+    <span style="display:flex;gap:0.5rem;align-items:center;">
+      <button id="filterBtn" class="icon-btn filter-btn" title="Filter">
+        <span class="material-symbols-rounded" id="filterBtnIcon">filter_alt</span>
+      </button>
+      <button id="toggleViewBtn" class="icon-btn toggle-view-btn" title="Cambiar vista">
+        <span class="material-symbols-rounded" id="toggleViewIcon">view_module</span>
+      </button>
+      <button id="toggleExpandBtn" class="icon-btn toggle-expand-btn" title="Expand/collapse all">
+        <span class="material-symbols-rounded" id="toggleExpandIcon">unfold_more</span>
+      </button>
+      <button id="settingsBtn" class="icon-btn settings-btn" title="Opciones" style="z-index:100;">
+        <span class="material-symbols-rounded">settings</span>
+      </button>
+    </span>
+  </div>
+
+  <!-- Menú lateral de opciones -->
+  <aside id="sideMenu" class="side-menu">
+    <button id="exportTxtBtn" class="icon-btn export-txt-btn">
+      <span class="material-symbols-rounded">convert_to_text</span>
+      <span class="export-txt-text">Export TXT</span>
+    </button>
+    <button id="clearAllBtn" class="icon-btn clear-all-btn">
+      <span class="material-symbols-rounded">delete_sweep</span>
+      <span class="clear-all-text">Clear all</span>
+    </button>
+  </aside>
+  <div id="filterPanelContainer"></div>
+  <div id="appliedFiltersInfo"></div>
+  <div id="sets"></div>
+
+  <div id="infoBoxes">
+    <div class="empty info-box"><span class="material-symbols-rounded" style="font-size:2.1rem;vertical-align:middle;margin-right:0.5rem;color:inherit;">privacy_tip</span>No file will be uploaded or sent to any server, everything is processed in your browser.</div>
+    <div class="empty info-box" style="margin-top:1.2rem;"><span class="material-symbols-rounded" style="font-size:2.1rem;vertical-align:middle;margin-right:0.5rem;color:inherit;">info</span>Consider that BrushPanel is a tool for previewing. It is not for managing, or modifying the .brushset file. It only shows the preview of the stroke and the name of each brush.</div>
+  </div>
+
+  <!-- Modal para previsualización ampliada -->
+  <div id="previewModal" style="display:none;position:fixed;z-index:1000;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);justify-content:center;align-items:center;flex-direction:column;">
+    <div style="position:relative;display:flex;align-items:center;justify-content:center;width:100%;">
+      <div id="previewOverlayText" style="position:absolute;top:-130px;left:0;right:0;z-index:1011;text-align:center;pointer-events:none;">
+        <div id="previewSetTitle" style="color:#a1a1aa;font-size:1.15rem;font-weight:400;margin-bottom:0.2rem;text-shadow:none;"></div>
+        <div id="previewName" style="color:#fff;font-size:2.1rem;font-weight:600;margin-bottom:1.5rem;text-shadow:0 2px 8px #000a;"></div>
+      </div>
+      <img id="previewImg" src="" style="max-width:80vw;max-height:70vh;border-radius:12px;display:block;" />
+    </div>
+    <div class="preview-arrows-row"><button id="previewPrev" style="background:none;border:none;color:#fff;font-size:3rem;cursor:pointer;z-index:1010;padding:0 1.2rem;opacity:0.7;"><span class="material-symbols-rounded" style="font-size:3rem;">chevron_left</span></button><span id="previewCounter" style="color:#a1a1aa;font-size:1.15rem;font-weight:400;pointer-events:none;user-select:none;"></span><button id="previewNext" style="background:none;border:none;color:#fff;font-size:3rem;cursor:pointer;z-index:1010;padding:0 1.2rem;opacity:0.7;"><span class="material-symbols-rounded" style="font-size:3rem;">chevron_right</span></button></div>
+    <span id="closePreview" style="position:absolute;top:-40px;right:32px;font-size:2.5rem;color:#fff;cursor:pointer;font-weight:bold;z-index:1010;">
+      <span class="material-symbols-rounded" style="font-size:2.5rem;">close</span>
+    </span>
+  </div>
+
+  <!-- JSZip desde CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <!-- Pyodide para ejecutar Python en el navegador -->
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

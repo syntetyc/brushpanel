@@ -1175,3 +1175,20 @@ button:not(.pill-btn):hover, button:not(.pill-btn):focus {
   font-size: 1.1rem !important;
   vertical-align: middle !important;
 } 
+
+/* Área de carga más alta cuando no hay archivos cargados */
+.upload {
+  min-height: 260px;
+  transition: min-height 0.35s cubic-bezier(.4,1.3,.6,1);
+}
+.upload.has-files {
+  min-height: 120px;
+}
+@media (max-width: 600px) {
+  .upload {
+    min-height: 160px;
+  }
+  .upload.has-files {
+    min-height: 70px;
+  }
+} 
