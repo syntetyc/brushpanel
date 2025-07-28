@@ -128,7 +128,7 @@ async function handleBrushsetFiles(fileList) {
   // Filtrar solo archivos .brushset
   const files = Array.from(fileList).filter(f => f.name && f.name.endsWith('.brushset'));
   if (!files.length) {
-    errorDiv.textContent = 'Selecciona uno o más archivos .brushset';
+    errorDiv.textContent = 'Only .brushset files are allowed';
     if (uploadDiv) uploadDiv.classList.remove('loading');
     if (dropRow) {
       dropRow.classList.remove('fade-out');
